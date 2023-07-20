@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    string firstcow, secondcow;
+    string firstcow = "", secondcow = "";
     int n, m, i, tmpamt, j, mxln, firstcowpos = 0, secondcowpos = 0, ct = 0;
     char tmpdir;
     cin >> n >> m;
@@ -28,6 +28,7 @@ int main()
         }
     }
     mxln = max(firstcow.length(), secondcow.length());
+    bool prevvis = false;
     for (i = 0; i < mxln; i++)
     {
         if (i < firstcow.length())
@@ -46,7 +47,15 @@ int main()
         }
         if (firstcowpos == secondcowpos)
         {
-            ct++;
+            if (!prevvis)
+            {
+                ct++;
+            }
+            prevvis = true;
+        }
+        else
+        {
+            prevvis = false;
         }
     }
     cout << ct;
