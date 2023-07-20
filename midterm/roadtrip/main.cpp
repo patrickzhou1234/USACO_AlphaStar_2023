@@ -28,7 +28,7 @@ int main()
         }
     }
     mxln = max(firstcow.length(), secondcow.length());
-    bool prevvis = false;
+    bool prevvis = true;
     for (i = 0; i < mxln; i++)
     {
         if (i < firstcow.length())
