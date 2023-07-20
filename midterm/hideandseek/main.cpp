@@ -17,6 +17,11 @@ int main()
         stps[i] = -1;
     }
     queue<int> q;
+    if (n > 2 * k + 1)
+    {
+        cout << n;
+        return 0;
+    }
     stps[n] = 0;
     q.push(n);
     while (!q.empty())
