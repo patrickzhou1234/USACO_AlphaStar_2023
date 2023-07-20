@@ -13,7 +13,7 @@ struct unit
 
 int main()
 {
-    int x, y, k, m, i, j, px, py, pk, transf, res = 0;
+    int x, y, k, m, i, j, px, py, pk, transf, res;
     cin >> x >> y >> k >> m;
     bool visited[x + 1][y + 1];
     for (i = 0; i < x + 1; i++)
@@ -27,22 +27,25 @@ int main()
         tmp = q.front();
         q.pop();
         px = tmp.x, py = tmp.y, pk = tmp.k;
-        if (tmp.x > k)
+        if (pk > k)
             continue;
-        if (visited)
+        if (visited[px][py])
             continue;
         visited[px][py] = true;
         pk++;
         q.push({x, py, pk});
         q.push({px, y, pk});
         q.push({0, py, pk});
+        q.push({px, 0, pk});
         transf = min(x - tmp.x, tmp.y);
         q.push({px + transf, py - transf, pk});
+        transf = min(tmp.x, y - tmp.y);
+        q.push({px - transf, py + transf, pk});
     }
     res = x + y;
-    for (i = 0; i < x; i++)
+    for (i = 0; i < x + 1; i++)
     {
-        for (j = 0; j < y; j++)
+        for (j = 0; j < y + 1; j++)
         {
             if (visited[i][j])
             {
