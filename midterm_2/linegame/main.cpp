@@ -6,38 +6,53 @@ using namespace std;
 
 #define MAX_INT 2147483647
 
+struct unit
+{
+    int val;
+    bool dealed;
+};
+
 int main()
 {
-    int n, i, j, bal, ct;
+    int n, i, j, bal, ct, k;
     cin >> n;
-    vector<int> arr;
+    vector<unit> arr;
     for (i = 0; i < n; i++)
     {
         cin >> j;
-        arr.push_back(j);
+        arr.push_back({j, false});
     }
-    bal = 0, i = 0, ct = 0;
-    while (!arr.empty())
+    bal = 0, i = 0, ct = 0, k = 0;
+    while (k != n)
     {
-        ct++;
         if (i >= arr.size())
         {
             i--;
             continue;
         }
-        if (arr[i] > 0)
+        ct++;
+        if (!arr[i].dealed)
         {
-            bal += arr[i];
-            arr.erase(arr.begin() + i);
-        }
-        else if (arr[i] + bal > 0)
-        {
-            bal -= arr[i];
-            arr.erase(arr.begin() + i);
+            if (arr[i].val > 0)
+            {
+                bal += arr[i].val;
+                arr[i].dealed = true;
+                k++;
+            }
+            else if (arr[i].val + bal > 0)
+            {
+                bal -= arr[i].val;
+                arr[i].dealed = true;
+                k++;
+            }
+            else
+            {
+                i++;
+            }
         }
         else
         {
-            i++;
+            i--;
         }
     }
     cout << ct;
