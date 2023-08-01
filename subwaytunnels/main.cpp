@@ -12,30 +12,28 @@ struct conn
 
 int n, m;
 
-unordered_set<int> dfs(int f, conn conns[], unordered_set<int> visnums, unordered_set<int> res)
+unordered_set<int> res;
+
+void dfs(int f, conn conns[])
 {
     int i;
-    if (visnums.find(f) != visnums.end())
+    if (res.find(f) != res.end())
     {
-        return res;
+        return;
     }
-    visnums.insert(f);
+    res.insert(f);
     for (i = 0; i < m; i++)
     {
         if (conns[i].t1 == f)
         {
-            res.insert(conns[i].t2);
-            unordered_set<int> tmp = dfs(conns[i].t2, conns, visnums, res);
-            res.insert(tmp.begin(), tmp.end());
+            dfs(conns[i].t2, conns);
         }
         if (conns[i].t2 == f)
         {
-            res.insert(conns[i].t1);
-            unordered_set<int> tmp = dfs(conns[i].t1, conns, visnums, res);
-            res.insert(tmp.begin(), tmp.end());
+            dfs(conns[i].t1, conns);
         }
     }
-    return res;
+    return;
 }
 
 int main()
@@ -47,14 +45,19 @@ int main()
     {
         cin >> conns[i].t1 >> conns[i].t2;
     }
-    unordered_set<int> visnums, res;
-    res = dfs(1, conns, visnums, res);
+    dfs(1, conns);
+    bool fd = false;
     for (i = 2; i <= n; i++)
     {
         if (res.find(i) == res.end())
         {
+            fd = true;
             cout << i << endl;
         }
+    }
+    if (!fd)
+    {
+        cout << 0;
     }
     system("pause");
     return 0;
